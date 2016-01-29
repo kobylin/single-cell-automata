@@ -26,7 +26,6 @@
 
       var stateY = 0;
 
-
       var ctx = document.getElementById("canvas").getContext('2d');
       var automata;
 
@@ -115,9 +114,9 @@
         doStep();
       }
 
-      $timeout(function() {
-        $scope.run();
-      });
+      // $timeout(function() {
+      //   $scope.run();
+      // });
 
     });
 

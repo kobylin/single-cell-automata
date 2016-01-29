@@ -65,3 +65,17 @@
   position: absolute;
   width: 100%;
 }
+
+.page-footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.container {
+  min-width: 1162px;
+}
+
+html {
+  min-height: 772px;
+}
