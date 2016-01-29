@@ -1,0 +1,24 @@
+{
+  "name": "single-cell-automata",
+  "homepage": "https://github.com/kobylin/single-cell-automata",
+  "authors": [
+    "Andrew Kobylin <andrew.kobylin@datarobot.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.4",
+    "underscore": "~1.8.3",
+    "materialize": "~0.97.0"
+  }
+}

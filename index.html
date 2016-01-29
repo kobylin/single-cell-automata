@@ -35,14 +35,14 @@
     		
 	    	<div class="right-column col s4">
 	    		<div class="element-controls">
-	    			<div class="switch">
+	    			<!-- <div class="switch">
 					    <label>
 					      Random
 					      <input type="checkbox" ng-model="manual">
 					      <span class="lever"></span>
 					      Manual
 				    </label>
-				    </div>
+				    </div> -->
 	    			<p class="range-field">
 	    				<label>Speed</label>
 				    	<input type="range" ng-model="speed" min="2" max="100" />
@@ -60,13 +60,13 @@
 				    	  	<span class="middle-item" ng-class="{filled: rKey[1] == 1}"></span>
 				    	  	<span class="right-item" ng-class="{filled: rKey[2] == 1}"></span>
 				    	  </span>
-					      <input type="checkbox" id="id_{{rKey}}" ng-model="rule[rKey]" />
+					      <input type="checkbox" id="id_{{rKey}}" ng-model="rules[rKey]" />
 					      <label for="id_{{rKey}}">
-                  <span class="middle-item" ng-class="{filled: rule[rKey] == 1}"></span>
+                  <span class="middle-item" ng-class="{filled: rules[rKey] == 1}"></span>
                 </label>
 					    </p>
 				    </div>
-				    <a class="waves-effect waves-light btn" ng-click="reset()"><i class="material-icons right">refresh</i>Reset</a>
+				    <a class="waves-effect waves-light btn" ng-click="stop()"><i class="material-icons right">stop</i>Stop</a>
 	    			<a class="waves-effect waves-light btn" ng-click="run()"  ng-show="!runInProgress">
               <i class="material-icons right">play_arrow</i>Run
             </a>
