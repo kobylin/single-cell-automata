@@ -11,7 +11,7 @@
           media="screen,projection"/>
     <link href="style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
-<body>
+<body ng-keyup="handleBodyKey($event)">
 <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container">
         <a id="logo-container" href="." class="brand-logo">Elementary cellular automaton</a>
@@ -19,6 +19,11 @@
             <li>
                 <a href="https://en.wikipedia.org/wiki/Elementary_cellular_automaton" target="_blank">
                     What is elementary cellular automaton?
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/kobylin/single-cell-automata" target="_blank">
+                    github
                 </a>
             </li>
         </ul>
@@ -30,13 +35,13 @@
     </div>
 </nav>
 <div class="section no-pad-bot" id="index-banner">
-    <div class="container canvas-container">
+    <div class="container">
         <div class="row">
-            <div class="canvas-container col s8">
-                <canvas id="canvas" width="800px" height="600px"
-                        ng-class="{'manual-enabled': manual}"
-                >
-                </canvas>
+            <div class="col s8">
+                <div class="canvas-container" ng-style="{width: width + 'px', height: height + 'px'}">
+                    <div class="canvas-time-line" ng-style="linePosition"></div>
+                    <canvas id="canvas" width="{{width}}px" height="{{height}}px"></canvas>
+                </div>
             </div>
 
             <div class="right-column col s4">
@@ -53,12 +58,12 @@
                     </label>
                     </div> -->
                     <p class="range-field">
-                        <label>Speed</label>
+                        <label>Speed (Keys Up/Down)</label>
                         <input type="range" ng-model="speed" min="2" max="100"/>
                         <span>{{speed}}</span>
                     </p>
                     <p class="range-field">
-                        <label>Scale</label>
+                        <label>Scale (Keys Left/Right)</label>
                         <input type="range" ng-model="scale" min="3" max="50"/>
                         <span>{{scale}}</span>
                     </p>
@@ -89,12 +94,9 @@
                         </div>
                     </div>
 
-                    <a class="waves-effect waves-light btn" ng-click="stop()"><i class="material-icons right">stop</i>Stop</a>
-                    <a class="waves-effect waves-light btn" ng-click="run()" ng-show="!runInProgress">
-                        <i class="material-icons right">play_arrow</i>Run
-                    </a>
-                    <a class="waves-effect waves-light btn" ng-click="stop()" ng-show="runInProgress">
-                        <i class="material-icons right">stop</i>Stop
+                    <a class="waves-effect waves-light btn" ng-click="stop()"><i class="material-icons right">stop</i>Stop (S)</a>
+                    <a class="waves-effect waves-light btn" ng-click="run()">
+                        <i class="material-icons right">play_arrow</i>Run (R)
                     </a>
                 </div>
             </div>
@@ -102,42 +104,6 @@
     </div>
 
 </div>
-
-<!--<footer class="page-footer orange">-->
-    <!--<div class="container">-->
-        <!--&lt;!&ndash;  <div class="row">-->
-           <!--<div class="col l6 s12">-->
-             <!--<h5 class="white-text">Company Bio</h5>-->
-             <!--<p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>-->
-
-           <!--</div>-->
-           <!--<div class="col l3 s12">-->
-             <!--<h5 class="white-text">Settings</h5>-->
-             <!--<ul>-->
-               <!--<li><a class="white-text" href="#!">Link 1</a></li>-->
-               <!--<li><a class="white-text" href="#!">Link 2</a></li>-->
-               <!--<li><a class="white-text" href="#!">Link 3</a></li>-->
-               <!--<li><a class="white-text" href="#!">Link 4</a></li>-->
-             <!--</ul>-->
-           <!--</div>-->
-           <!--<div class="col l3 s12">-->
-             <!--<h5 class="white-text">Connect</h5>-->
-             <!--<ul>-->
-               <!--<li><a class="white-text" href="#!">Link 1</a></li>-->
-               <!--<li><a class="white-text" href="#!">Link 2</a></li>-->
-               <!--<li><a class="white-text" href="#!">Link 3</a></li>-->
-               <!--<li><a class="white-text" href="#!">Link 4</a></li>-->
-             <!--</ul>-->
-           <!--</div>-->
-         <!--</div> &ndash;&gt;-->
-    <!--</div>-->
-    <!--<div class="footer-copyright">-->
-        <!--<div class="container">-->
-            <!--Made by Andrew Kobylin-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</footer>-->
-
 
 <!--  Scripts-->
 <script type="text/javascript" src="bower_components/angular/angular.js"></script>

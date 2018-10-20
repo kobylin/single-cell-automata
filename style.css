@@ -25,6 +25,16 @@
 
 .canvas-container {
 	/*text-align: center;*/
+    position: relative;
+}
+
+.canvas-time-line {
+    margin-top: 1em;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    border-top: 1px solid black;
 }
 
 #canvas {
