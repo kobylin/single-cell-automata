@@ -28,7 +28,12 @@
 }
 
 #canvas {
+  margin-top: 1em;
   border: 1px solid black;
+}
+
+input[type=range] + .thumb {
+  display: none !important;
 }
 
 #canvas.manual-enabled:hover {
@@ -36,7 +41,6 @@
 }
 
 .element-controls {
-	margin-top: 50px;
 	padding-left: 40px;
 }
 
@@ -44,16 +48,23 @@
   margin-right: 9px;
 }
 
+.rule-definition__item {
+
+}
+
 .left-item, .middle-item, .right-item {
   display: inline-block;
-  height: 10px;
-  width: 10px;
+  height: 20px;
+  width: 20px;
   border: 1px solid black;
+  margin-left: 10px;
   /*font-weight: 500;*/
   /*color: #2bbbad;*/
 }
 .middle-item {
-  border: 2px solid #2bbbad;
+  border: 1px solid #2bbbad;
+  outline: 2px solid #2bbbad;
+  cursor: pointer;
 }
 
 .left-item.filled, .middle-item.filled, .right-item.filled {
@@ -74,6 +85,24 @@
 
 .container {
   min-width: 1162px;
+}
+
+.rules-list li {
+    list-style-type: decimal;
+}
+
+.rules-container {
+  margin-top: 40px;
+}
+
+.rules-container__title {
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+.rules-container__hint-highlight {
+  color: #2bbbad;
+  font-weight: 600;
 }
 
 html {

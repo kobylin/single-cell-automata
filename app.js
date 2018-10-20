@@ -1,17 +1,16 @@
 (function() {
   angular
-    .module('noc', [])
-    .controller('SingleCellAutomataCtrl', function($scope, $timeout) {
-
+    .module("noc", [])
+    .controller("SingleCellAutomataCtrl", function($scope, $timeout) {
       $scope.rules = {
-        '000': false,
-        '001': true,
-        '010': false,
-        '011': true,
-        '100': true,
-        '101': false,
-        '110': true,
-        '111': false
+        "000": false,
+        "001": true,
+        "010": false,
+        "011": true,
+        "100": true,
+        "101": false,
+        "110": true,
+        "111": false
       };
       $scope.ruleKeys = _.keys($scope.rules).sort();
       $scope.speed = 5;
@@ -21,48 +20,86 @@
         height = 600,
         itemsX,
         itemsY,
-        backgroundColor = 'white',
-        cellColor = 'black';
+        backgroundColor = "white",
+        cellColor = "black";
 
       var stateY = 0;
 
-      var ctx = document.getElementById("canvas").getContext('2d');
+      var ctx = document.getElementById("canvas").getContext("2d");
       var automata;
 
       var manualState = [];
       var manualModeActive = false;
       // $scope.runInProgress = false;
 
-      $('canvas').click(function(e) {
+      $("canvas").click(function(e) {
         if (!manualModeActive) {
           $scope.reset();
           manualModeActive = true;
           manualState = [];
         }
         var p = CanvasHelper.getMousePos(this, e);
-        var ix = p.x / $scope.scale - (p.x % $scope.scale / $scope.scale);
-        manualState[ix] = +(!manualState[ix]);
+        var ix = p.x / $scope.scale - (p.x % $scope.scale) / $scope.scale;
+        manualState[ix] = +!manualState[ix];
 
         CanvasHelper.clearScreen(ctx, width, height, backgroundColor);
-        CanvasHelper.drawState(ctx, manualState, 0, $scope.scale, cellColor, backgroundColor, width);
+        CanvasHelper.drawState(
+          ctx,
+          manualState,
+          0,
+          $scope.scale,
+          cellColor,
+          backgroundColor,
+          width
+        );
       });
 
       // $scope.manual = false;
 
-      $scope.$watch('scale', function() {
+      $scope.$watch("scale", function() {
         itemsX = width / $scope.scale;
         itemsY = height / $scope.scale;
 
         $scope.stop();
 
         CanvasHelper.clearScreen(ctx, width, height, backgroundColor);
-        CanvasHelper.drawRectSample(ctx, $scope.scale, backgroundColor, cellColor);
+        CanvasHelper.drawRectSample(
+          ctx,
+          $scope.scale,
+          backgroundColor,
+          cellColor
+        );
 
         stateY = 0;
         // $scope.run();
       });
 
+      $scope.$watch(
+        "rules",
+        function() {
+          console.log("$scope.ruleCode", $scope.ruleCode);
+          $scope.ruleCode = $scope.ruleKeys.reduce(
+            (total, rule) => total + Number($scope.rules[rule]).toString(),
+            ""
+          );
+        },
+        true
+      );
+
+      $scope.updateRuleFromCode = function() {
+        $scope.ruleCode = $scope.ruleCode.slice(0, $scope.ruleKeys.length);
+        for (var i = 0; i < $scope.ruleKeys.length; i++) {
+          $scope.rules[$scope.ruleKeys[i]] = Boolean(
+            Number($scope.ruleCode[i])
+          );
+        }
+      };
+
       var stepTimeoutId = null;
+
+      $scope.toggleRule = function(rule) {
+        $scope.rules[rule] = !$scope.rules[rule];
+      };
 
       $scope.reset = function() {
         // console.log('Reset');
@@ -89,9 +126,12 @@
         //   $scope.reset();
         // }
         // $scope.runInProgress = true;
-        // 
+        //
         automata = new SingleCellAutomata({
-          state: manualState.length === 0 ? SingleCellAutomata.createRandomState(itemsX) : manualState,
+          state:
+            manualState.length === 0
+              ? SingleCellAutomata.createRandomState(itemsX)
+              : manualState,
           size: itemsX,
           rules: $scope.rules
         });
@@ -102,33 +142,41 @@
 
         function doStep() {
           automata.next();
-          CanvasHelper.drawState(ctx, automata.getState(), stateY, $scope.scale, cellColor, backgroundColor, width);
+          CanvasHelper.drawState(
+            ctx,
+            automata.getState(),
+            stateY,
+            $scope.scale,
+            cellColor,
+            backgroundColor,
+            width
+          );
 
           stateY++;
           if (stateY > itemsY) {
             CanvasHelper.clearScreen(ctx, width, height, backgroundColor);
             stateY = 0;
           }
-          stepTimeoutId = setTimeout(doStep, 1000 / $scope.speed)
+          stepTimeoutId = setTimeout(doStep, 1000 / $scope.speed);
         }
         doStep();
-      }
+      };
 
       // $timeout(function() {
       //   $scope.run();
       // });
-
     });
-
-}());
-
+})();
 
 function SingleCellAutomata(options) {
-  this.options = _.extend({
-    state: [],
-    size: 100,
-    rules: {}
-  }, options || {});
+  this.options = _.extend(
+    {
+      state: [],
+      size: 100,
+      rules: {}
+    },
+    options || {}
+  );
 
   this.state = _.clone(options.state);
 }
@@ -158,13 +206,13 @@ SingleCellAutomata.prototype = {
       var prev = state[i - 1] ? 1 : 0;
       var next = state[i + 1] ? 1 : 0;
 
-      var pattern = prev + '' + state[i] + '' + next;
+      var pattern = prev + "" + state[i] + "" + next;
       newState[i] = rule[pattern] ? 1 : 0;
     }
 
     return newState;
   }
-}
+};
 
 var CanvasHelper = {
   getMousePos: function(canvas, evt) {
@@ -176,7 +224,6 @@ var CanvasHelper = {
   },
   drawState: function(ctx, state, t, scale, cellColor, backgroundColor, width) {
     for (var i = 0; i < state.length; i++) {
-
       ctx.strokeStyle = cellColor;
       ctx.beginPath();
       ctx.moveTo(0, (t + 1) * scale);
@@ -185,15 +232,14 @@ var CanvasHelper = {
 
       ctx.strokeStyle = backgroundColor;
       ctx.beginPath();
-      ctx.moveTo(0, (t) * scale);
-      ctx.lineTo(width, (t) * scale);
+      ctx.moveTo(0, t * scale);
+      ctx.lineTo(width, t * scale);
       ctx.stroke();
 
       if (state[i] === 1) {
         ctx.fillStyle = cellColor;
         ctx.fillRect(i * scale, t * scale, scale - 1, scale - 1);
       } else {
-
       }
     }
   },

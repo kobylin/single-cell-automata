@@ -1,130 +1,150 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="noc" ng-controller="SingleCellAutomataCtrl">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Cellural Automaton</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Cellular Automaton</title>
 
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="bower_components/materialize/dist/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="bower_components/materialize/dist/css/materialize.css" type="text/css" rel="stylesheet"
+          media="screen,projection"/>
+    <link href="style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-  <nav class="light-blue lighten-1" role="navigation">
+<nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container">
-      <a id="logo-container" href="#" class="brand-logo">Elementary cellular automaton</a>
-      <ul class="right hide-on-med-and-down">
-        <li>
-          <a href="https://en.wikipedia.org/wiki/Elementary_cellular_automaton" target="_blank">Wiki</a>
-        </li>
-      </ul>
+        <a id="logo-container" href="." class="brand-logo">Elementary cellular automaton</a>
+        <ul class="right hide-on-med-and-down">
+            <li>
+                <a href="https://en.wikipedia.org/wiki/Elementary_cellular_automaton" target="_blank">
+                    What is elementary cellular automaton?
+                </a>
+            </li>
+        </ul>
 
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Navbar Link</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul id="nav-mobile" class="side-nav">
+            <li><a href="#">Navbar Link</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
-  </nav>
-  <div class="section no-pad-bot" id="index-banner">
+</nav>
+<div class="section no-pad-bot" id="index-banner">
     <div class="container canvas-container">
-    	<div class="row">
-        <div class="canvas-container col s8">
-          <canvas id="canvas" width="800px" height="600px"
-            ng-class="{'manual-enabled': manual}"
-          >
-          </canvas>
-        </div>
-    		
-	    	<div class="right-column col s4">
-	    		<div class="element-controls">
-	    			<!-- <div class="switch">
-					    <label>
-					      Random
-					      <input type="checkbox" ng-model="manual">
-					      <span class="lever"></span>
-					      Manual
-				    </label>
-				    </div> -->
-	    			<p class="range-field">
-	    				<label>Speed</label>
-				    	<input type="range" ng-model="speed" min="2" max="100" />
-				    	<span>{{speed}}</span>
-				    </p>
-				    <p class="range-field">
-	    				<label>Scale</label>
-				    	<input type="range" ng-model="scale" min="2" max="50" />
-				    	<span>{{scale}}</span>
-				    </p>
-				    <div class="rule-set" ng-repeat="rKey in ruleKeys">
-				    	<p>
-				    	  <span class="rule-definition">
-				    	  	<span class="left-item" ng-class="{filled: rKey[0] == 1}"></span>
-				    	  	<span class="middle-item" ng-class="{filled: rKey[1] == 1}"></span>
-				    	  	<span class="right-item" ng-class="{filled: rKey[2] == 1}"></span>
-				    	  </span>
-					      <input type="checkbox" id="id_{{rKey}}" ng-model="rules[rKey]" />
-					      <label for="id_{{rKey}}">
-                  <span class="middle-item" ng-class="{filled: rules[rKey] == 1}"></span>
-                </label>
-					    </p>
-				    </div>
-				    <a class="waves-effect waves-light btn" ng-click="stop()"><i class="material-icons right">stop</i>Stop</a>
-	    			<a class="waves-effect waves-light btn" ng-click="run()"  ng-show="!runInProgress">
-              <i class="material-icons right">play_arrow</i>Run
-            </a>
-            <a class="waves-effect waves-light btn" ng-click="stop()" ng-show="runInProgress">
-              <i class="material-icons right">stop</i>Stop
-            </a>
-	    		</div>
-	    	</div>
-	    </div>
-    	</div>
-    	
-  </div>
+        <div class="row">
+            <div class="canvas-container col s8">
+                <canvas id="canvas" width="800px" height="600px"
+                        ng-class="{'manual-enabled': manual}"
+                >
+                </canvas>
+            </div>
 
-  <footer class="page-footer orange">
-    <div class="container">
-     <!--  <div class="row">
-        <div class="col l6 s12">
-          <h5 class="white-text">Company Bio</h5>
-          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+            <div class="right-column col s4">
+                <div>
 
+                </div>
+                <div class="element-controls">
+                    <!-- <div class="switch">
+                        <label>
+                          Random
+                          <input type="checkbox" ng-model="manual">
+                          <span class="lever"></span>
+                          Manual
+                    </label>
+                    </div> -->
+                    <p class="range-field">
+                        <label>Speed</label>
+                        <input type="range" ng-model="speed" min="2" max="100"/>
+                        <span>{{speed}}</span>
+                    </p>
+                    <p class="range-field">
+                        <label>Scale</label>
+                        <input type="range" ng-model="scale" min="3" max="50"/>
+                        <span>{{scale}}</span>
+                    </p>
+                    <div class="rules-container">
+                        <h6 class="rules-container__title">Rules:</h6>
+                        <div class="rules-container__hint">
+                            There are <span class="rules-container__hint-highlight">8 rules</span> how cell can behave depends of left and right cell. <br/>
+                            Change <span class="rules-container__hint-highlight">middle</span> square to define cell behaviour in concrete situation.
+                        </div>
+
+                        <ul class="rules-list">
+                            <li class="rule-set" ng-repeat="rKey in ruleKeys">
+                                <p>
+                                    <span class="rule-definition">
+                                        <span class="left-item" ng-class="{filled: rKey[0] == 1}"></span>
+                                        <span class="middle-item"
+                                              ng-class="{filled: rules[rKey] == 1}"
+                                              ng-click="toggleRule(rKey)">
+                                        </span>
+                                        <span class="right-item" ng-class="{filled: rKey[2] == 1}"></span>
+                                    </span>
+                                </p>
+                            </li>
+                        </ul>
+                        <div>
+                            <label for="">Rule code (paste and hit "Enter"):</label>
+                            <input type="text" ng-model="ruleCode" ng-keyup="$event.keyCode === 13 && updateRuleFromCode()">
+                        </div>
+                    </div>
+
+                    <a class="waves-effect waves-light btn" ng-click="stop()"><i class="material-icons right">stop</i>Stop</a>
+                    <a class="waves-effect waves-light btn" ng-click="run()" ng-show="!runInProgress">
+                        <i class="material-icons right">play_arrow</i>Run
+                    </a>
+                    <a class="waves-effect waves-light btn" ng-click="stop()" ng-show="runInProgress">
+                        <i class="material-icons right">stop</i>Stop
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Settings</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-      </div> -->
     </div>
-    <div class="footer-copyright">
-      <div class="container">
-        Made by Andrew Kobylin
-      </div>
-    </div>
-  </footer>
+
+</div>
+
+<!--<footer class="page-footer orange">-->
+    <!--<div class="container">-->
+        <!--&lt;!&ndash;  <div class="row">-->
+           <!--<div class="col l6 s12">-->
+             <!--<h5 class="white-text">Company Bio</h5>-->
+             <!--<p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>-->
+
+           <!--</div>-->
+           <!--<div class="col l3 s12">-->
+             <!--<h5 class="white-text">Settings</h5>-->
+             <!--<ul>-->
+               <!--<li><a class="white-text" href="#!">Link 1</a></li>-->
+               <!--<li><a class="white-text" href="#!">Link 2</a></li>-->
+               <!--<li><a class="white-text" href="#!">Link 3</a></li>-->
+               <!--<li><a class="white-text" href="#!">Link 4</a></li>-->
+             <!--</ul>-->
+           <!--</div>-->
+           <!--<div class="col l3 s12">-->
+             <!--<h5 class="white-text">Connect</h5>-->
+             <!--<ul>-->
+               <!--<li><a class="white-text" href="#!">Link 1</a></li>-->
+               <!--<li><a class="white-text" href="#!">Link 2</a></li>-->
+               <!--<li><a class="white-text" href="#!">Link 3</a></li>-->
+               <!--<li><a class="white-text" href="#!">Link 4</a></li>-->
+             <!--</ul>-->
+           <!--</div>-->
+         <!--</div> &ndash;&gt;-->
+    <!--</div>-->
+    <!--<div class="footer-copyright">-->
+        <!--<div class="container">-->
+            <!--Made by Andrew Kobylin-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</footer>-->
 
 
-  <!--  Scripts-->
-  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/jquery/dist/jquery.js"></script>
-  <script src="bower_components/materialize/dist/js/materialize.js"></script>
-  <script src="bower_components/underscore/underscore.js"></script>
-  <script src="app.js"></script>
+<!--  Scripts-->
+<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/materialize/dist/js/materialize.js"></script>
+<script src="bower_components/underscore/underscore.js"></script>
+<script src="app.js"></script>
 
-  </body>
+</body>
 </html>
