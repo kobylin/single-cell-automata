@@ -1,166 +1,303 @@
-(function ($) {
-    $.fn.tooltip = function (options) {
-        var timeout = null,
-        counter = null,
-        started = false,
-        counterInterval = null,
-        margin = 5;
+(function($, anim) {
+  'use strict';
 
-      // Defaults
-      var defaults = {
-        delay: 350
-      };
-      options = $.extend(defaults, options);
-
-      //Remove previously created html
-      $('.material-tooltip').remove();
-
-      return this.each(function(){
-        var origin = $(this);
-
-      // Create Text span
-      var tooltip_text = $('<span></span>').text(origin.attr('data-tooltip'));
-
-      // Create tooltip
-      var newTooltip = $('<div></div>');
-      newTooltip.addClass('material-tooltip').append(tooltip_text);
-      newTooltip.appendTo($('body'));
-
-      var backdrop = $('<div></div>').addClass('backdrop');
-      backdrop.appendTo(newTooltip);
-      backdrop.css({ top: 0, left:0 });
-
-
-     //Destroy previously binded events
-    $(this).off('mouseenter mouseleave');
-      // Mouse In
-    $(this).on({
-      mouseenter: function(e) {
-        var tooltip_delay = origin.data("delay");
-        tooltip_delay = (tooltip_delay === undefined || tooltip_delay === '') ? options.delay : tooltip_delay;
-        counter = 0;
-        counterInterval = setInterval(function(){
-          counter += 10;
-          if (counter >= tooltip_delay && started === false) {
-            started = true;
-            newTooltip.css({ display: 'block', left: '0px', top: '0px' });
-
-            // Set Tooltip text
-            newTooltip.children('span').text(origin.attr('data-tooltip'));
-
-            // Tooltip positioning
-            var originWidth = origin.outerWidth();
-            var originHeight = origin.outerHeight();
-            var tooltipPosition =  origin.attr('data-position');
-            var tooltipHeight = newTooltip.outerHeight();
-            var tooltipWidth = newTooltip.outerWidth();
-            var tooltipVerticalMovement = '0px';
-            var tooltipHorizontalMovement = '0px';
-            var scale_factor = 8;
-
-            if (tooltipPosition === "top") {
-            // Top Position
-            newTooltip.css({
-              top: origin.offset().top - tooltipHeight - margin,
-              left: origin.offset().left + originWidth/2 - tooltipWidth/2
-            });
-            tooltipVerticalMovement = '-10px';
-            backdrop.css({
-              borderRadius: '14px 14px 0 0',
-              transformOrigin: '50% 90%',
-              marginTop: tooltipHeight,
-              marginLeft: (tooltipWidth/2) - (backdrop.width()/2)
-
-            });
-            }
-            // Left Position
-            else if (tooltipPosition === "left") {
-              newTooltip.css({
-                top: origin.offset().top + originHeight/2 - tooltipHeight/2,
-                left: origin.offset().left - tooltipWidth - margin
-              });
-              tooltipHorizontalMovement = '-10px';
-              backdrop.css({
-                width: '14px',
-                height: '14px',
-                borderRadius: '14px 0 0 14px',
-                transformOrigin: '95% 50%',
-                marginTop: tooltipHeight/2,
-                marginLeft: tooltipWidth
-              });
-            }
-            // Right Position
-            else if (tooltipPosition === "right") {
-              newTooltip.css({
-                top: origin.offset().top + originHeight/2 - tooltipHeight/2,
-                left: origin.offset().left + originWidth + margin
-              });
-              tooltipHorizontalMovement = '+10px';
-              backdrop.css({
-                width: '14px',
-                height: '14px',
-                borderRadius: '0 14px 14px 0',
-                transformOrigin: '5% 50%',
-                marginTop: tooltipHeight/2,
-                marginLeft: '0px'
-              });
-            }
-            else {
-              // Bottom Position
-              newTooltip.css({
-                top: origin.offset().top + origin.outerHeight() + margin,
-                left: origin.offset().left + originWidth/2 - tooltipWidth/2
-              });
-              tooltipVerticalMovement = '+10px';
-              backdrop.css({
-                marginLeft: (tooltipWidth/2) - (backdrop.width()/2)
-              });
-            }
-
-            // Calculate Scale to fill
-            scale_factor = tooltipWidth / 8;
-            if (scale_factor < 8) {
-              scale_factor = 8;
-            }
-            if (tooltipPosition === "right" || tooltipPosition === "left") {
-              scale_factor = tooltipWidth / 10;
-              if (scale_factor < 6)
-                scale_factor = 6;
-            }
-
-            newTooltip.velocity({ opacity: 1, marginTop: tooltipVerticalMovement, marginLeft: tooltipHorizontalMovement}, { duration: 350, queue: false });
-            backdrop.css({ display: 'block' })
-            .velocity({opacity:1},{duration: 55, delay: 0, queue: false})
-            .velocity({scale: scale_factor}, {duration: 300, delay: 0, queue: false, easing: 'easeInOutQuad'});
-
-          }
-        }, 10); // End Interval
-
-      // Mouse Out
-      },
-      mouseleave: function(){
-        // Reset State
-        clearInterval(counterInterval);
-        counter = 0;
-
-        // Animate back
-        newTooltip.velocity({
-          opacity: 0, marginTop: 0, marginLeft: 0}, { duration: 225, queue: false, delay: 275 }
-        );
-        backdrop.velocity({opacity: 0, scale: 1}, {
-          duration:225,
-          delay: 275, queue: false,
-          complete: function(){
-            backdrop.css('display', 'none');
-            newTooltip.css('display', 'none');
-            started = false;}
-        });
-      }
-      });
-    });
+  let _defaults = {
+    exitDelay: 200,
+    enterDelay: 0,
+    html: null,
+    margin: 5,
+    inDuration: 250,
+    outDuration: 200,
+    position: 'bottom',
+    transitionMovement: 10
   };
 
-  $(document).ready(function(){
-     $('.tooltipped').tooltip();
-   });
-}( jQuery ));
+  /**
+   * @class
+   *
+   */
+  class Tooltip extends Component {
+    /**
+     * Construct Tooltip instance
+     * @constructor
+     * @param {Element} el
+     * @param {Object} options
+     */
+    constructor(el, options) {
+      super(Tooltip, el, options);
+
+      this.el.M_Tooltip = this;
+      this.options = $.extend({}, Tooltip.defaults, options);
+
+      this.isOpen = false;
+      this.isHovered = false;
+      this.isFocused = false;
+      this._appendTooltipEl();
+      this._setupEventHandlers();
+    }
+
+    static get defaults() {
+      return _defaults;
+    }
+
+    static init(els, options) {
+      return super.init(this, els, options);
+    }
+
+    /**
+     * Get Instance
+     */
+    static getInstance(el) {
+      let domElem = !!el.jquery ? el[0] : el;
+      return domElem.M_Tooltip;
+    }
+
+    /**
+     * Teardown component
+     */
+    destroy() {
+      $(this.tooltipEl).remove();
+      this._removeEventHandlers();
+      this.el.M_Tooltip = undefined;
+    }
+
+    _appendTooltipEl() {
+      let tooltipEl = document.createElement('div');
+      tooltipEl.classList.add('material-tooltip');
+      this.tooltipEl = tooltipEl;
+
+      let tooltipContentEl = document.createElement('div');
+      tooltipContentEl.classList.add('tooltip-content');
+      tooltipContentEl.innerHTML = this.options.html;
+      tooltipEl.appendChild(tooltipContentEl);
+      document.body.appendChild(tooltipEl);
+    }
+
+    _updateTooltipContent() {
+      this.tooltipEl.querySelector('.tooltip-content').innerHTML = this.options.html;
+    }
+
+    _setupEventHandlers() {
+      this._handleMouseEnterBound = this._handleMouseEnter.bind(this);
+      this._handleMouseLeaveBound = this._handleMouseLeave.bind(this);
+      this._handleFocusBound = this._handleFocus.bind(this);
+      this._handleBlurBound = this._handleBlur.bind(this);
+      this.el.addEventListener('mouseenter', this._handleMouseEnterBound);
+      this.el.addEventListener('mouseleave', this._handleMouseLeaveBound);
+      this.el.addEventListener('focus', this._handleFocusBound, true);
+      this.el.addEventListener('blur', this._handleBlurBound, true);
+    }
+
+    _removeEventHandlers() {
+      this.el.removeEventListener('mouseenter', this._handleMouseEnterBound);
+      this.el.removeEventListener('mouseleave', this._handleMouseLeaveBound);
+      this.el.removeEventListener('focus', this._handleFocusBound, true);
+      this.el.removeEventListener('blur', this._handleBlurBound, true);
+    }
+
+    open(isManual) {
+      if (this.isOpen) {
+        return;
+      }
+      isManual = isManual === undefined ? true : undefined; // Default value true
+      this.isOpen = true;
+      // Update tooltip content with HTML attribute options
+      this.options = $.extend({}, this.options, this._getAttributeOptions());
+      this._updateTooltipContent();
+      this._setEnterDelayTimeout(isManual);
+    }
+
+    close() {
+      if (!this.isOpen) {
+        return;
+      }
+
+      this.isHovered = false;
+      this.isFocused = false;
+      this.isOpen = false;
+      this._setExitDelayTimeout();
+    }
+
+    /**
+     * Create timeout which delays when the tooltip closes
+     */
+    _setExitDelayTimeout() {
+      clearTimeout(this._exitDelayTimeout);
+
+      this._exitDelayTimeout = setTimeout(() => {
+        if (this.isHovered || this.isFocused) {
+          return;
+        }
+
+        this._animateOut();
+      }, this.options.exitDelay);
+    }
+
+    /**
+     * Create timeout which delays when the toast closes
+     */
+    _setEnterDelayTimeout(isManual) {
+      clearTimeout(this._enterDelayTimeout);
+
+      this._enterDelayTimeout = setTimeout(() => {
+        if (!this.isHovered && !this.isFocused && !isManual) {
+          return;
+        }
+
+        this._animateIn();
+      }, this.options.enterDelay);
+    }
+
+    _positionTooltip() {
+      let origin = this.el,
+        tooltip = this.tooltipEl,
+        originHeight = origin.offsetHeight,
+        originWidth = origin.offsetWidth,
+        tooltipHeight = tooltip.offsetHeight,
+        tooltipWidth = tooltip.offsetWidth,
+        newCoordinates,
+        margin = this.options.margin,
+        targetTop,
+        targetLeft;
+
+      (this.xMovement = 0), (this.yMovement = 0);
+
+      targetTop = origin.getBoundingClientRect().top + M.getDocumentScrollTop();
+      targetLeft = origin.getBoundingClientRect().left + M.getDocumentScrollLeft();
+
+      if (this.options.position === 'top') {
+        targetTop += -tooltipHeight - margin;
+        targetLeft += originWidth / 2 - tooltipWidth / 2;
+        this.yMovement = -this.options.transitionMovement;
+      } else if (this.options.position === 'right') {
+        targetTop += originHeight / 2 - tooltipHeight / 2;
+        targetLeft += originWidth + margin;
+        this.xMovement = this.options.transitionMovement;
+      } else if (this.options.position === 'left') {
+        targetTop += originHeight / 2 - tooltipHeight / 2;
+        targetLeft += -tooltipWidth - margin;
+        this.xMovement = -this.options.transitionMovement;
+      } else {
+        targetTop += originHeight + margin;
+        targetLeft += originWidth / 2 - tooltipWidth / 2;
+        this.yMovement = this.options.transitionMovement;
+      }
+
+      newCoordinates = this._repositionWithinScreen(
+        targetLeft,
+        targetTop,
+        tooltipWidth,
+        tooltipHeight
+      );
+      $(tooltip).css({
+        top: newCoordinates.y + 'px',
+        left: newCoordinates.x + 'px'
+      });
+    }
+
+    _repositionWithinScreen(x, y, width, height) {
+      let scrollLeft = M.getDocumentScrollLeft();
+      let scrollTop = M.getDocumentScrollTop();
+      let newX = x - scrollLeft;
+      let newY = y - scrollTop;
+
+      let bounding = {
+        left: newX,
+        top: newY,
+        width: width,
+        height: height
+      };
+
+      let offset = this.options.margin + this.options.transitionMovement;
+      let edges = M.checkWithinContainer(document.body, bounding, offset);
+
+      if (edges.left) {
+        newX = offset;
+      } else if (edges.right) {
+        newX -= newX + width - window.innerWidth;
+      }
+
+      if (edges.top) {
+        newY = offset;
+      } else if (edges.bottom) {
+        newY -= newY + height - window.innerHeight;
+      }
+
+      return {
+        x: newX + scrollLeft,
+        y: newY + scrollTop
+      };
+    }
+
+    _animateIn() {
+      this._positionTooltip();
+      this.tooltipEl.style.visibility = 'visible';
+      anim.remove(this.tooltipEl);
+      anim({
+        targets: this.tooltipEl,
+        opacity: 1,
+        translateX: this.xMovement,
+        translateY: this.yMovement,
+        duration: this.options.inDuration,
+        easing: 'easeOutCubic'
+      });
+    }
+
+    _animateOut() {
+      anim.remove(this.tooltipEl);
+      anim({
+        targets: this.tooltipEl,
+        opacity: 0,
+        translateX: 0,
+        translateY: 0,
+        duration: this.options.outDuration,
+        easing: 'easeOutCubic'
+      });
+    }
+
+    _handleMouseEnter() {
+      this.isHovered = true;
+      this.isFocused = false; // Allows close of tooltip when opened by focus.
+      this.open(false);
+    }
+
+    _handleMouseLeave() {
+      this.isHovered = false;
+      this.isFocused = false; // Allows close of tooltip when opened by focus.
+      this.close();
+    }
+
+    _handleFocus() {
+      if (M.tabPressed) {
+        this.isFocused = true;
+        this.open(false);
+      }
+    }
+
+    _handleBlur() {
+      this.isFocused = false;
+      this.close();
+    }
+
+    _getAttributeOptions() {
+      let attributeOptions = {};
+      let tooltipTextOption = this.el.getAttribute('data-tooltip');
+      let positionOption = this.el.getAttribute('data-position');
+
+      if (tooltipTextOption) {
+        attributeOptions.html = tooltipTextOption;
+      }
+
+      if (positionOption) {
+        attributeOptions.position = positionOption;
+      }
+      return attributeOptions;
+    }
+  }
+
+  M.Tooltip = Tooltip;
+
+  if (M.jQueryLoaded) {
+    M.initializeJqueryWrapper(Tooltip, 'tooltip', 'M_Tooltip');
+  }
+})(cash, M.anime);

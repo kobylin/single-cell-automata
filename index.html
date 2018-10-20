@@ -27,11 +27,6 @@
                 </a>
             </li>
         </ul>
-
-        <ul id="nav-mobile" class="side-nav">
-            <li><a href="#">Navbar Link</a></li>
-        </ul>
-        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
 </nav>
 <div class="section no-pad-bot" id="index-banner">
@@ -42,13 +37,30 @@
                     <div class="canvas-time-line" ng-style="linePosition"></div>
                     <canvas id="canvas" width="{{width}}px" height="{{height}}px"></canvas>
                 </div>
+                <a class="canvas__download-link valign-wrapper" href="" ng-click="downloadImage($event)">Download image (Key D)<i class="material-icons">file_download</i></a>
             </div>
 
             <div class="right-column col s4">
-                <div>
-
-                </div>
                 <div class="element-controls">
+                    <div class="input-field col s12 m6">
+                        <select class="icons" ng-model="backgroundColor">
+                            <option value="" disabled selected>Background</option>
+                            <option ng-repeat="color in colors" value="{{color}}">{{color}}</option>
+                        </select>
+                        <label class="valign-wrapper">Background (Keys N/M)
+                            <div class="color-select__sample" ng-style="{backgroundColor: backgroundColor}"></div>
+                        </label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <select class="icons" ng-model="cellColor">
+                            <option value="" disabled selected>Cell color</option>
+                            <option ng-repeat="color in colors" value="{{color}}">{{color}}</option>
+                        </select>
+                        <label class="valign-wrapper">Cell color  (Keys O/P)
+                            <div class="color-select__sample" ng-style="{backgroundColor: cellColor}"></div>
+                        </label>
+                    </div>
+
                     <!-- <div class="switch">
                         <label>
                           Random
@@ -70,7 +82,7 @@
                     <div class="rules-container">
                         <h6 class="rules-container__title">Rules:</h6>
                         <div class="rules-container__hint">
-                            There are <span class="rules-container__hint-highlight">8 rules</span> how cell can behave depends of left and right cell. <br/>
+                            There are <span class="rules-container__hint-highlight">8 rules</span> how cell can behave depends of left and right cell.
                             Change <span class="rules-container__hint-highlight">middle</span> square to define cell behaviour in concrete situation.
                         </div>
 

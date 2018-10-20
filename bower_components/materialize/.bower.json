@@ -1,5 +1,5 @@
 {
-  "name": "Materialize",
+  "name": "materialize",
   "description": "A modern responsive front-end framework based on Material Design",
   "keywords": [
     "css",
@@ -14,29 +14,8 @@
     "design"
   ],
   "main": [
-    "bin/materialize.css",
-    "bin/materialize.js",
-    "font/material-design-icons/Material-Design-Icons.eot",
-    "font/material-design-icons/Material-Design-Icons.svg",
-    "font/material-design-icons/Material-Design-Icons.ttf",
-    "font/material-design-icons/Material-Design-Icons.woff",
-    "font/material-design-icons/Material-Design-Icons.woff2",
-    "font/roboto/Roboto-Bold.ttf",
-    "font/roboto/Roboto-Bold.woff",
-    "font/roboto/Roboto-Bold.woff2",
-    "font/roboto/Roboto-Light.ttf",
-    "font/roboto/Roboto-Light.woff",
-    "font/roboto/Roboto-Light.woff2",
-    "font/roboto/Roboto-Medium.ttf",
-    "font/roboto/Roboto-Medium.woff",
-    "font/roboto/Roboto-Medium.woff2",
-    "font/roboto/Roboto-Regular.ttf",
-    "font/roboto/Roboto-Regular.woff",
-    "font/roboto/Roboto-Regular.woff2",
-    "font/roboto/Roboto-Thin.ttf",
-    "font/roboto/Roboto-Thin.woff",
-    "font/roboto/Roboto-Thin.woff2",
-    "sass/*"
+    "dist/js/materialize.js",
+    "dist/css/materialize.css"
   ],
   "ignore": [
     "jade/",
@@ -59,19 +38,15 @@
     "package.json",
     "Gruntfile.js"
   ],
-  "dependencies": {
-    "jquery": ">=2.1.1"
-  },
   "homepage": "https://github.com/Dogfalo/materialize",
-  "version": "0.97.0",
-  "_release": "0.97.0",
+  "version": "1.0.0",
+  "_release": "1.0.0",
   "_resolution": {
     "type": "version",
-    "tag": "v0.97.0",
-    "commit": "669355d82c08c912535bb4b69e878d8d8bfe04db"
+    "tag": "1.0.0",
+    "commit": "6752a855c521fb20da29d11ef4b94206f0b0ca37"
   },
-  "_source": "git://github.com/Dogfalo/materialize.git",
-  "_target": "~0.97.0",
-  "_originalSource": "materialize",
-  "_direct": true
+  "_source": "https://github.com/Dogfalo/materialize.git",
+  "_target": "1.0.0",
+  "_originalSource": "materialize"
 }

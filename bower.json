@@ -19,6 +19,6 @@
   "dependencies": {
     "angular": "~1.4.4",
     "underscore": "~1.8.3",
-    "materialize": "~0.97.0"
+    "materialize": "1.0.0"
   }
 }
