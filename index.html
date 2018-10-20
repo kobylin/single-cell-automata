@@ -6,7 +6,7 @@
     <title>Cellular Automaton</title>
 
     <!-- CSS  -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link href="bower_components/materialize/dist/css/materialize.css" type="text/css" rel="stylesheet"
           media="screen,projection"/>
     <link href="style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -33,11 +33,12 @@
     <div class="container">
         <div class="row">
             <div class="col s8">
-                <div class="canvas-container" ng-style="{width: width + 'px', height: height + 'px'}">
+                <div class="canvas-container" ng-style="{width: width + 'px', height: height + 'px'}" ng-class="{'canvas_fullscreen': fullscreen}">
                     <div class="canvas-time-line" ng-style="linePosition"></div>
                     <canvas id="canvas" width="{{width}}px" height="{{height}}px"></canvas>
                 </div>
-                <a class="canvas__download-link valign-wrapper" href="" ng-click="downloadImage($event)">Download image (Key D)<i class="material-icons">file_download</i></a>
+                <a class="canvas__download-link valign-wrapper" href="" ng-click="downloadImage($event)">Download image
+                    (Key D)<i class="material-icons">file_download</i></a>
             </div>
 
             <div class="right-column col s4">
@@ -56,19 +57,10 @@
                             <option value="" disabled selected>Cell color</option>
                             <option ng-repeat="color in colors" value="{{color}}">{{color}}</option>
                         </select>
-                        <label class="valign-wrapper">Cell color  (Keys O/P)
+                        <label class="valign-wrapper">Cell color (Keys O/P)
                             <div class="color-select__sample" ng-style="{backgroundColor: cellColor}"></div>
                         </label>
                     </div>
-
-                    <!-- <div class="switch">
-                        <label>
-                          Random
-                          <input type="checkbox" ng-model="manual">
-                          <span class="lever"></span>
-                          Manual
-                    </label>
-                    </div> -->
                     <p class="range-field">
                         <label>Speed (Keys Up/Down)</label>
                         <input type="range" ng-model="speed" min="2" max="100"/>
@@ -82,31 +74,35 @@
                     <div class="rules-container">
                         <h6 class="rules-container__title">Rules:</h6>
                         <div class="rules-container__hint">
-                            There are <span class="rules-container__hint-highlight">8 rules</span> how cell can behave depends of left and right cell.
-                            Change <span class="rules-container__hint-highlight">middle</span> square to define cell behaviour in concrete situation.
+                            There are <span class="rules-container__hint-highlight">8 rules</span> how cell can behave
+                            depends of left and right cell.
+                            Change <span class="rules-container__hint-highlight">middle</span> square to define cell
+                            behaviour in concrete situation.
                         </div>
 
                         <ul class="rules-list">
                             <li class="rule-set" ng-repeat="rKey in ruleKeys">
                                 <p>
-                                    <span class="rule-definition">
-                                        <span class="left-item" ng-class="{filled: rKey[0] == 1}"></span>
-                                        <span class="middle-item"
-                                              ng-class="{filled: rules[rKey] == 1}"
-                                              ng-click="toggleRule(rKey)">
+                                        <span class="rule-definition">
+                                            <span class="left-item" ng-class="{filled: rKey[0] == 1}"></span>
+                                            <span class="middle-item"
+                                                  ng-class="{filled: rules[rKey] == 1}"
+                                                  ng-click="toggleRule(rKey)">
+                                            </span>
+                                            <span class="right-item" ng-class="{filled: rKey[2] == 1}"></span>
                                         </span>
-                                        <span class="right-item" ng-class="{filled: rKey[2] == 1}"></span>
-                                    </span>
                                 </p>
                             </li>
                         </ul>
                         <div>
-                            <label for="">Rule code (paste and hit "Enter"):</label>
-                            <input type="text" ng-model="ruleCode" ng-keyup="$event.keyCode === 13 && updateRuleFromCode()">
+                            <label>Rule code (paste and hit "Enter"):</label>
+                            <input type="text" ng-model="ruleCode"
+                                   ng-keyup="$event.keyCode === 13 && updateRuleFromCode()">
                         </div>
                     </div>
 
-                    <a class="waves-effect waves-light btn" ng-click="stop()"><i class="material-icons right">stop</i>Stop (S)</a>
+                    <a class="waves-effect waves-light btn" ng-click="stop()"><i class="material-icons right">stop</i>Stop
+                        (S)</a>
                     <a class="waves-effect waves-light btn" ng-click="run()">
                         <i class="material-icons right">play_arrow</i>Run (R)
                     </a>
@@ -114,7 +110,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <!--  Scripts-->

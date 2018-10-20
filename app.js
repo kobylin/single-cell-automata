@@ -22,9 +22,7 @@
             $scope.backgroundColor = "#00c853";
             $scope.cellColor = "#fffde7";
 
-            var width = $scope.width,
-                height = $scope.height,
-                itemsCountX,
+            var itemsCountX,
                 itemsCountY,
                 automata,
                 manualState = [],
@@ -130,8 +128,8 @@
             $scope.$watch("backgroundColor", function() {
                 CanvasHelper.clearScreen(
                     ctx,
-                    width,
-                    height,
+                    $scope.width,
+                    $scope.height,
                     $scope.backgroundColor
                 );
                 CanvasHelper.drawRectSample(
@@ -163,8 +161,8 @@
 
                 CanvasHelper.clearScreen(
                     ctx,
-                    width,
-                    height,
+                    $scope.width,
+                    $scope.height,
                     $scope.backgroundColor
                 );
                 CanvasHelper.drawState(
@@ -174,14 +172,14 @@
                     $scope.scale,
                     $scope.cellColor,
                     $scope.backgroundColor,
-                    width
+                    $scope.width
                 );
                 $scope.$apply();
             });
 
             $scope.$watch("scale", function() {
-                itemsCountX = width / $scope.scale;
-                itemsCountY = height / $scope.scale;
+                itemsCountX = $scope.width / $scope.scale;
+                itemsCountY = $scope.height / $scope.scale;
 
                 if (automata) {
                     $scope.stateY = 0;
@@ -208,8 +206,8 @@
                     });
                     CanvasHelper.clearScreen(
                         ctx,
-                        width,
-                        height,
+                        $scope.width,
+                        $scope.height,
                         $scope.backgroundColor
                     );
                 } else {
@@ -217,8 +215,8 @@
                     $timeout(() => {
                         CanvasHelper.clearScreen(
                             ctx,
-                            width,
-                            height,
+                            $scope.width,
+                            $scope.height,
                             $scope.backgroundColor
                         );
                         CanvasHelper.drawRectSample(
@@ -264,8 +262,8 @@
                 $scope.stop();
                 CanvasHelper.clearScreen(
                     ctx,
-                    width,
-                    height,
+                    $scope.width,
+                    $scope.height,
                     $scope.backgroundColor
                 );
             };
@@ -278,8 +276,8 @@
                 $scope.reset();
                 CanvasHelper.clearScreen(
                     ctx,
-                    width,
-                    height,
+                    $scope.width,
+                    $scope.height,
                     $scope.backgroundColor
                 );
 
@@ -304,15 +302,15 @@
                         $scope.scale,
                         $scope.cellColor,
                         $scope.backgroundColor,
-                        width
+                        $scope.width
                     );
 
                     $scope.stateY++;
                     if ($scope.stateY > itemsCountY) {
                         CanvasHelper.clearScreen(
                             ctx,
-                            width,
-                            height,
+                            $scope.width,
+                            $scope.height,
                             $scope.backgroundColor
                         );
                         $scope.stateY = 0;
@@ -323,7 +321,7 @@
             };
 
             $scope.downloadImage = function() {
-                var link = $('.canvas__download-link')[0];
+                var link = $(".canvas__download-link")[0];
 
                 link.setAttribute("download", "cell_automata.png");
                 link.setAttribute(
@@ -356,6 +354,24 @@
                         });
                 });
             }, 100);
+
+            $scope.fullscreen = false;
+
+            window.addEventListener("resize", function() {
+                if (screen.width === window.innerWidth) {
+                    $scope.fullscreen = true;
+                    $scope.width = screen.width;
+                    $scope.height = screen.height;
+                    $scope.scale++;
+                    $scope.$apply();
+                } else if ($scope.fullscreen) {
+                    $scope.fullscreen = false;
+                    $scope.width = 800;
+                    $scope.height = 600;
+                    $scope.scale--;
+                    $scope.$apply();
+                }
+            });
         });
 })();
 
@@ -413,15 +429,7 @@ var CanvasHelper = {
             y: evt.clientY - rect.top
         };
     },
-    drawState: function(
-        ctx,
-        state,
-        t,
-        scale,
-        cellColor,
-        backgroundColor,
-        width
-    ) {
+    drawState: function(ctx, state, t, scale, cellColor) {
         for (var i = 0; i < state.length; i++) {
             if (state[i] === 1) {
                 ctx.fillStyle = cellColor;
@@ -429,19 +437,6 @@ var CanvasHelper = {
             } else {
             }
         }
-
-        // debugger;
-        // ctx.strokeStyle = backgroundColor;
-        // ctx.beginPath();
-        // ctx.moveTo(0, t * scale);
-        // ctx.lineTo(width, t * scale);
-        // ctx.stroke();
-        //
-        // ctx.strokeStyle = cellColor;
-        // ctx.beginPath();
-        // ctx.moveTo(0, (t + 1) * scale);
-        // ctx.lineTo(width, (t + 1) * scale);
-        // ctx.stroke();
     },
 
     clearScreen: function(ctx, width, height, color) {

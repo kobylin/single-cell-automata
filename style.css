@@ -36,6 +36,10 @@
     border-top: 1px solid black;
 }
 
+.canvas_fullscreen .canvas-time-line {
+    margin-top: 0;
+}
+
 #canvas {
     margin-top: 1em;
     border: 1px solid black;
@@ -132,4 +136,15 @@ html {
 .canvas__download-link {
     position: relative;
     top: 30px;
+}
+
+.canvas_fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100000;
+}
+
+.canvas_fullscreen #canvas {
+    margin-top: 0;
 }
