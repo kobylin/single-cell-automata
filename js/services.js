@@ -6,7 +6,9 @@
             if (/^[01]+$/.test(strRuleCode)) {
                 return strRuleCode.slice(0, length).padStart(length, "0");
             } else if (/^#[\d]+$/.test(strRuleCode)) {
-                return (parseInt(strRuleCode.slice(1)) || 0)
+                var number = parseInt(strRuleCode.slice(1)) || 0;
+                number = Math.min(Math.max(0, number), 255);
+                return number
                     .toString(2)
                     .slice(0, length)
                     .padStart(length, "0");

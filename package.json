@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/kobylin/single-cell-automata/issues"
   },
-  "homepage": "https://github.com/kobylin/single-cell-automata#readme"
+  "homepage": "https://github.com/kobylin/single-cell-automata#readme",
+  "dependencies": {
+    "angular": "~1.4.4",
+    "jquery": "^3.3.1",
+    "materialize-css": "1.0.0",
+    "underscore": "~1.9.1"
+  }
 }

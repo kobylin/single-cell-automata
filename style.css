@@ -86,12 +86,33 @@ input[type="range"] + .thumb {
     width: 20px;
     border: 1px solid black;
     margin-left: 10px;
-    /*font-weight: 500;*/
-    /*color: #2bbbad;*/
 }
 .middle-item {
     border: 1px solid #2bbbad;
-    /*outline: 2px solid #2bbbad;*/
+}
+
+.rule-set {
+}
+
+.rule-set:hover .rule-set__inner-container::after {
+    /* copy-paste from material */
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "liga";
+
+    content: "keyboard_arrow_left";
 }
 
 .rule-set__state-marker {
@@ -186,4 +207,19 @@ html {
 
 .canvas_fullscreen #canvas {
     margin-top: 0;
+}
+
+.rule-code__rule-number {
+    height: 3rem;
+    line-height: 3rem;
+    margin-left: 20px;
+    font-size: 1.3em;
+    color: #228e80;
+    text-align: center;
+}
+
+.clearfix::after {
+    display: block;
+    content: "";
+    clear: both;
 }
