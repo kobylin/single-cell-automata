@@ -12,7 +12,7 @@
     <link href="style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body ng-keyup="handleBodyKey($event)">
-<nav class="light-blue lighten-1" role="navigation">
+<nav id="navigation" class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container">
         <a id="logo-container" href="." class="brand-logo">Elementary cellular automaton</a>
         <ul class="right hide-on-med-and-down">
@@ -37,8 +37,15 @@
                     <div class="canvas-time-line" ng-style="linePosition"></div>
                     <canvas id="canvas" width="{{width}}px" height="{{height}}px"></canvas>
                 </div>
-                <a class="canvas__download-link valign-wrapper" href="" ng-click="downloadImage($event)">Download image
-                    (Key D)<i class="material-icons">file_download</i></a>
+                <div>
+                    <a class="canvas__download-link " href="" ng-click="downloadImage($event)">
+                        Download image (Key D)<i class="material-icons">file_download</i>
+                    </a>
+                    <a class="canvas__download-hidden-link"></a>
+                </div>
+                <div>
+                    <b>Fullscreen mode - F11</b>
+                </div>
             </div>
 
             <div class="right-column col s4">
@@ -74,23 +81,31 @@
                     <div class="rules-container">
                         <h6 class="rules-container__title">Rules:</h6>
                         <div class="rules-container__hint">
-                            There are <span class="rules-container__hint-highlight">8 rules</span> how cell can behave
-                            depends of left and right cell.
-                            Change <span class="rules-container__hint-highlight">middle</span> square to define cell
-                            behaviour in concrete situation.
+                            There are <span class="rules-container__hint-highlight">8 rules</span> if cell will born
+                            depends of three nearby cells.
+                            Click on <span class="rules-container__hint-highlight">rule</span> to toggle if cell will born or die.
                         </div>
 
-                        <ul class="rules-list">
-                            <li class="rule-set" ng-repeat="rKey in ruleKeys">
-                                <p>
-                                        <span class="rule-definition">
-                                            <span class="left-item" ng-class="{filled: rKey[0] == 1}"></span>
-                                            <span class="middle-item"
-                                                  ng-class="{filled: rules[rKey] == 1}"
-                                                  ng-click="toggleRule(rKey)">
-                                            </span>
-                                            <span class="right-item" ng-class="{filled: rKey[2] == 1}"></span>
-                                        </span>
+                        <ul class="rules-list browser-default">
+                            <li class="rule-set"
+                                ng-repeat="rKey in ruleKeys"
+                                ng-class="{'rule-set_enabled': rules[rKey]}"
+                                ng-click="toggleRule(rKey)">
+                                <p class="valign-wrapper">
+                                    <span class="rule-definition">
+                                        <span class="left-item" ng-class="{filled: rKey[0] == 1}"></span>
+                                        <span class="middle-item" ng-class="{filled: rKey[1] == 1}"></span>
+                                        <span class="right-item" ng-class="{filled: rKey[2] == 1}"></span>
+                                    </span>
+                                    <span
+                                        class="rule-set__state-marker"
+                                        ng-class="{
+                                            'rule-set__state-marker_born': rules[rKey],
+                                            'rule-set__state-marker_die': !rules[rKey]
+                                        }"
+                                    >
+                                        {{rules[rKey] ? 'Will born' : 'Will die'}}
+                                    </span>
                                 </p>
                             </li>
                         </ul>
@@ -98,6 +113,7 @@
                             <label>Rule code (paste and hit "Enter"):</label>
                             <input type="text" ng-model="ruleCode"
                                    ng-keyup="$event.keyCode === 13 && updateRuleFromCode()">
+                            <span>Rule #{{ruleNumber}}</span>
                         </div>
                     </div>
 
@@ -113,11 +129,18 @@
 </div>
 
 <!--  Scripts-->
-<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+<script src="js/polyfills.js"></script>
+<script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/materialize/dist/js/materialize.js"></script>
 <script src="bower_components/underscore/underscore.js"></script>
-<script src="app.js"></script>
+
+<script src="js/CanvasHelper.js"></script>
+<script src="js/SingleCellAutomata.js"></script>
+<script src="js/module.js"></script>
+<script src="js/const.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controller.js"></script>
 
 </body>
 </html>

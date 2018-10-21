@@ -23,12 +23,27 @@
     font-feature-settings: "liga";
 }
 
+#navigation {
+    height: 50px;
+    line-height: 50px;
+}
+
+#logo-container {
+    font-size: 1.7em;
+}
+
 .canvas-container {
     position: relative;
+    margin-top: 1em;
+}
+
+.canvas__download-link .material-icons {
+    position: relative;
+    top: 7px;
+    left: 0;
 }
 
 .canvas-time-line {
-    margin-top: 1em;
     position: absolute;
     left: 0;
     top: 0;
@@ -36,12 +51,11 @@
     border-top: 1px solid black;
 }
 
-.canvas_fullscreen .canvas-time-line {
+.canvas_fullscreen.canvas-container {
     margin-top: 0;
 }
 
 #canvas {
-    margin-top: 1em;
     border: 1px solid black;
 }
 
@@ -77,8 +91,18 @@ input[type="range"] + .thumb {
 }
 .middle-item {
     border: 1px solid #2bbbad;
-    outline: 2px solid #2bbbad;
-    cursor: pointer;
+    /*outline: 2px solid #2bbbad;*/
+}
+
+.rule-set__state-marker {
+    font-weight: 600;
+}
+
+.rule-set__state-marker_born {
+    color: #2bbbad;
+}
+.rule-set__state-marker_die {
+    color: #d50000;
 }
 
 .left-item.filled,
@@ -111,6 +135,22 @@ input[type="range"] + .thumb {
     margin-top: 10px;
 }
 
+.rule-set {
+    cursor: pointer;
+}
+
+.rule-set__selected-marker {
+    /*display: none;*/
+}
+
+.rule-set_enabled .rule-set__selected-marker {
+    /*display: inline;*/
+}
+
+.rule-set_enabled .rule-definition {
+    /*border: 1px solid #2bbbad;*/
+}
+
 .rules-container__title {
     font-weight: 600;
     font-size: 1.2em;
@@ -134,8 +174,7 @@ html {
 }
 
 .canvas__download-link {
-    position: relative;
-    top: 30px;
+    margin-top: 20px;
 }
 
 .canvas_fullscreen {

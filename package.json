@@ -1,0 +1,19 @@
+{
+  "name": "single-cell-automata",
+  "version": "1.0.0",
+  "description": "Interactive implementation of Single Cell Automata using AngularJS data binding and Canvas.",
+  "main": "js/app.js",
+  "scripts": {
+    "start": "python -m SimpleHTTPServer 8000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kobylin/single-cell-automata.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kobylin/single-cell-automata/issues"
+  },
+  "homepage": "https://github.com/kobylin/single-cell-automata#readme"
+}
