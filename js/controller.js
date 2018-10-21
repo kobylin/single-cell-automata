@@ -342,6 +342,7 @@
 
         // TODO: move to directive
         this._initColorDropdowns = function() {
+            $('.tooltipped').tooltip();
             var selects = $("select").formSelect();
 
             selects.each(function(idx, el) {
@@ -376,12 +377,14 @@
                 $scope.height = defaults.height;
                 $scope.scale--;
             }
-            CanvasHelper.clearScreen(
-                ctx,
-                $scope.width,
-                $scope.height,
-                $scope.backgroundColor
-            );
+            $timeout(() => {
+                CanvasHelper.clearScreen(
+                    ctx,
+                    $scope.width,
+                    $scope.height,
+                    $scope.backgroundColor
+                );
+            });
         });
     });
 })();

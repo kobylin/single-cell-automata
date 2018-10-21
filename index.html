@@ -33,7 +33,10 @@
     <div class="container">
         <div class="row">
             <div class="col s8">
-                <div class="canvas-container" ng-style="{width: width + 'px', height: height + 'px'}"
+                <div
+                     data-position="top"
+                     data-tooltip="Before start click somewhere on the canvas to place a cells. Otherwise cells will be placed randomly"
+                     class="canvas-container tooltipped" ng-style="{width: width + 'px', height: height + 'px'}"
                      ng-class="{'canvas_fullscreen': fullscreen}">
                     <div class="canvas-time-line" ng-style="linePosition"></div>
                     <canvas id="canvas" width="{{width}}px" height="{{height}}px"></canvas>
