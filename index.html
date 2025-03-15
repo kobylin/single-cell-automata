@@ -1,159 +1,226 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="noc" ng-controller="SingleCellAutomataCtrl">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1.0"
+    />
     <title>Cellular Automaton</title>
 
     <!-- CSS  -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link href="node_modules/materialize-css/dist/css/materialize.min.css" type="text/css" rel="stylesheet"
-          media="screen,projection"/>
-    <link href="style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-</head>
-<body ng-keyup="handleBodyKey($event)">
-<nav id="navigation" class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container">
-        <a id="logo-container" href="." class="brand-logo">Elementary cellular automaton</a>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="node_modules/materialize-css/dist/css/materialize.min.css"
+      type="text/css"
+      rel="stylesheet"
+      media="screen,projection"
+    />
+    <link
+      href="style.css"
+      type="text/css"
+      rel="stylesheet"
+      media="screen,projection"
+    />
+  </head>
+  <body ng-keyup="handleBodyKey($event)">
+    <nav id="navigation" class="light-blue lighten-1" role="navigation">
+      <div class="nav-wrapper container">
+        <a id="logo-container" href="." class="brand-logo"
+          >Elementary cellular automaton</a
+        >
         <ul class="right hide-on-med-and-down">
-            <li>
-                <a href="https://en.wikipedia.org/wiki/Elementary_cellular_automaton" target="_blank">
-                    What is elementary cellular automaton?
-                </a>
-            </li>
-            <li>
-                <a href="https://github.com/kobylin/single-cell-automata" target="_blank">
-                    github
-                </a>
-            </li>
+          <li>
+            <a
+              href="https://en.wikipedia.org/wiki/Elementary_cellular_automaton"
+              target="_blank"
+            >
+              What is elementary cellular automaton?
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/kobylin/single-cell-automata"
+              target="_blank"
+            >
+              github
+            </a>
+          </li>
         </ul>
-    </div>
-</nav>
-<div class="section no-pad-bot" id="index-banner">
-    <div class="container">
+      </div>
+    </nav>
+    <div class="section no-pad-bot" id="index-banner">
+      <div class="container">
         <div class="row">
-            <div class="col s8">
-                <div
-                     data-position="top"
-                     data-tooltip="Before start click somewhere on the canvas to place a cells. Otherwise cells will be placed randomly"
-                     class="canvas-container tooltipped" ng-style="{width: width + 'px', height: height + 'px'}"
-                     ng-class="{'canvas_fullscreen': fullscreen}">
-                    <div class="canvas-time-line" ng-style="linePosition"></div>
-                    <canvas id="canvas" width="{{width}}px" height="{{height}}px"></canvas>
-                </div>
-                <div>
-                    <a class="canvas__download-link " href="" ng-click="downloadImage($event)">
-                        Download image (Key D)<i class="material-icons">file_download</i>
-                    </a>
-                    <a class="canvas__download-hidden-link"></a>
-                </div>
-                <div>
-                    <b>Fullscreen mode - F11</b>
-                </div>
+          <div class="col s8">
+            <div
+              data-position="top"
+              data-tooltip="Before start click somewhere on the canvas to place a cells. Otherwise cells will be placed randomly"
+              class="canvas-container tooltipped"
+              ng-style="{width: width + 'px', height: height + 'px'}"
+              ng-class="{'canvas_fullscreen': fullscreen}"
+            >
+              <div class="canvas-time-line" ng-style="linePosition"></div>
+              <canvas
+                id="canvas"
+                width="{{width}}px"
+                height="{{height}}px"
+              ></canvas>
             </div>
+            <div>
+              <a
+                class="canvas__download-link"
+                href=""
+                ng-click="downloadImage($event)"
+              >
+                Download image (Key D)<i class="material-icons"
+                  >file_download</i
+                >
+              </a>
+              <a class="canvas__download-hidden-link"></a>
+            </div>
+            <!-- <div>
+                    <b>Fullscreen mode - F11</b>
+                </div> -->
+          </div>
 
-            <div class="right-column col s4">
-                <div class="element-controls">
-                    <div class="input-field col s12 m6">
-                        <select class="icons" ng-model="backgroundColor">
-                            <option value="" disabled selected>Background</option>
-                            <option ng-repeat="color in colors" value="{{color}}">{{color}}</option>
-                        </select>
-                        <label class="valign-wrapper">Background (Keys N/M)
-                            <div class="color-select__sample" ng-style="{backgroundColor: backgroundColor}"></div>
-                        </label>
-                    </div>
-                    <div class="input-field col s12 m6">
-                        <select class="icons" ng-model="cellColor">
-                            <option value="" disabled selected>Cell color</option>
-                            <option ng-repeat="color in colors" value="{{color}}">{{color}}</option>
-                        </select>
-                        <label class="valign-wrapper">Cell color (Keys O/P)
-                            <div class="color-select__sample" ng-style="{backgroundColor: cellColor}"></div>
-                        </label>
-                    </div>
-                    <p class="range-field">
-                        <label>Speed (Keys Up/Down)</label>
-                        <input type="range" ng-model="speed" min="2" max="100"/>
-                        <span>{{speed}}</span>
-                    </p>
-                    <p class="range-field">
-                        <label>Scale (Keys Left/Right)</label>
-                        <input type="range" ng-model="scale" min="3" max="50"/>
-                        <span>{{scale}}</span>
-                    </p>
-                    <div class="rules-container">
-                        <h6 class="rules-container__title">Rules:</h6>
-                        <div class="rules-container__hint">
-                            There are <span class="rules-container__hint-highlight">8 rules</span> if cell will born
-                            depends of three nearby cells.
-                            Click on <span class="rules-container__hint-highlight">rule</span> to toggle if cell will
-                            born or die.
-                        </div>
+          <div class="right-column col s4">
+            <div class="element-controls">
+              <div class="input-field col s12 m6">
+                <select class="icons" ng-model="backgroundColor">
+                  <option value="" disabled selected>Background</option>
+                  <option ng-repeat="color in colors" value="{{color}}">
+                    {{color}}
+                  </option>
+                </select>
+                <label class="valign-wrapper"
+                  >Background (Keys N/M)
+                  <div
+                    class="color-select__sample"
+                    ng-style="{backgroundColor: backgroundColor}"
+                  ></div>
+                </label>
+              </div>
+              <div class="input-field col s12 m6">
+                <select class="icons" ng-model="cellColor">
+                  <option value="" disabled selected>Cell color</option>
+                  <option ng-repeat="color in colors" value="{{color}}">
+                    {{color}}
+                  </option>
+                </select>
+                <label class="valign-wrapper"
+                  >Cell color (Keys O/P)
+                  <div
+                    class="color-select__sample"
+                    ng-style="{backgroundColor: cellColor}"
+                  ></div>
+                </label>
+              </div>
+              <p class="range-field">
+                <label>Speed (Keys Up/Down)</label>
+                <input type="range" ng-model="speed" min="2" max="100" />
+                <span>{{speed}}</span>
+              </p>
+              <p class="range-field">
+                <label>Scale (Keys Left/Right)</label>
+                <input type="range" ng-model="scale" min="3" max="50" />
+                <span>{{scale}}</span>
+              </p>
+              <div class="rules-container">
+                <h6 class="rules-container__title">Rules:</h6>
+                <div class="rules-container__hint">
+                  There are
+                  <span class="rules-container__hint-highlight">8 rules</span>
+                  if cell will born depends of three nearby cells. Click on
+                  <span class="rules-container__hint-highlight">rule</span>
+                  to toggle if cell will born or die.
+                </div>
 
-                        <ul class="rules-list browser-default">
-                            <li class="rule-set"
-                                ng-repeat="rKey in ruleKeys"
-                                ng-class="{'rule-set_enabled': rules[rKey]}"
-                                ng-click="toggleRule(rKey)">
-                                <p class="rule-set__inner-container valign-wrapper">
-                                    <span class="rule-definition">
-                                        <span class="left-item" ng-class="{filled: rKey[0] == 1}"></span>
-                                        <span class="middle-item" ng-class="{filled: rKey[1] == 1}"></span>
-                                        <span class="right-item" ng-class="{filled: rKey[2] == 1}"></span>
-                                    </span>
-                                    <span
-                                        class="rule-set__state-marker"
-                                        ng-class="{
+                <ul class="rules-list browser-default">
+                  <li
+                    class="rule-set"
+                    ng-repeat="rKey in ruleKeys"
+                    ng-class="{'rule-set_enabled': rules[rKey]}"
+                    ng-click="toggleRule(rKey)"
+                  >
+                    <p class="rule-set__inner-container valign-wrapper">
+                      <span class="rule-definition">
+                        <span
+                          class="left-item"
+                          ng-class="{filled: rKey[0] == 1}"
+                        ></span>
+                        <span
+                          class="middle-item"
+                          ng-class="{filled: rKey[1] == 1}"
+                        ></span>
+                        <span
+                          class="right-item"
+                          ng-class="{filled: rKey[2] == 1}"
+                        ></span>
+                      </span>
+                      <span
+                        class="rule-set__state-marker"
+                        ng-class="{
                                             'rule-set__state-marker_born': rules[rKey],
                                             'rule-set__state-marker_die': !rules[rKey]
                                         }"
-                                    >
-                                        {{rules[rKey] ? 'Will born' : 'Will die'}}
-                                    </span>
-                                </p>
-                            </li>
-                        </ul>
-                        <div class="rule-code-input-container">
-                            <label>Rule binary code. Prefix with "#" to set rule by
-                                <a href="https://en.wikipedia.org/wiki/Elementary_cellular_automaton#Random_initial_state"
-                                   target="_blank">number</a><br> (and hit "Enter"):</label>
-                            <div class="clearfix">
-                                <input type="text"
-                                       class="col s12 m6"
-                                       ng-model="ruleCode"
-                                       ng-keyup="$event.keyCode === 13 && updateRuleFromCode()">
-                                <span class="rule-code__rule-number col s12 m4">
-                                    Rule #{{ruleNumber}}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a class="waves-effect waves-light btn" ng-click="stop()"><i class="material-icons right">stop</i>Stop
-                        (S)</a>
-                    <a class="waves-effect waves-light btn" ng-click="run()">
-                        <i class="material-icons right">play_arrow</i>Run (R)
-                    </a>
+                      >
+                        {{rules[rKey] ? 'Will born' : 'Will die'}}
+                      </span>
+                    </p>
+                  </li>
+                </ul>
+                <div class="rule-code-input-container">
+                  <label
+                    >Rule binary code. Prefix with "#" to set rule by
+                    <a
+                      href="https://en.wikipedia.org/wiki/Elementary_cellular_automaton#Random_initial_state"
+                      target="_blank"
+                      >number</a
+                    ><br />
+                    (and hit "Enter"):</label
+                  >
+                  <div class="clearfix">
+                    <input
+                      type="text"
+                      class="col s12 m6"
+                      ng-model="ruleCode"
+                      ng-keyup="$event.keyCode === 13 && updateRuleFromCode()"
+                    />
+                    <span class="rule-code__rule-number col s12 m4">
+                      Rule #{{ruleNumber}}
+                    </span>
+                  </div>
                 </div>
+              </div>
+
+              <a class="waves-effect waves-light btn" ng-click="stop()"
+                ><i class="material-icons right">stop</i>Stop (S)</a
+              >
+              <a class="waves-effect waves-light btn" ng-click="run()">
+                <i class="material-icons right">play_arrow</i>Run (R)
+              </a>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
 
-<!--  Scripts-->
-<script src="js/polyfills.js"></script>
-<script src="node_modules/angular/angular.min.js"></script>
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
-<script src="node_modules/underscore/underscore-min.js"></script>
+    <!--  Scripts-->
+    <script src="js/polyfills.js"></script>
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+    <script src="node_modules/underscore/underscore-min.js"></script>
 
-<script src="js/CanvasHelper.js"></script>
-<script src="js/SingleCellAutomata.js"></script>
-<script src="js/module.js"></script>
-<script src="js/const.js"></script>
-<script src="js/services.js"></script>
-<script src="js/controller.js"></script>
-
-</body>
+    <script src="js/CanvasHelper.js"></script>
+    <script src="js/SingleCellAutomata.js"></script>
+    <script src="js/module.js"></script>
+    <script src="js/const.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controller.js"></script>
+  </body>
 </html>
