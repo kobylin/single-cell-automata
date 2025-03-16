@@ -1,3 +1,3 @@
-(function() {
-    window.nocModule = angular.module("noc", []);
+(function () {
+  window.nocModule = angular.module('noc', []);
 })();

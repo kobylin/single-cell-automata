@@ -1,78 +1,78 @@
 .material-icons {
-    font-family: "Material Icons";
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px; /* Preferred icon size */
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
 
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
 
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
 
-    /* Support for IE. */
-    font-feature-settings: "liga";
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }
 
 #navigation {
-    height: 50px;
-    line-height: 50px;
+  height: 50px;
+  line-height: 50px;
 }
 
 #logo-container {
-    font-size: 1.7em;
+  font-size: 1.7em;
 }
 
 .canvas-container {
-    position: relative;
-    margin-top: 1em;
+  position: relative;
+  margin-top: 1em;
 }
 
 .canvas__download-link .material-icons {
-    position: relative;
-    top: 7px;
-    left: 0;
+  position: relative;
+  top: 7px;
+  left: 0;
 }
 
 .canvas-time-line {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    border-top: 1px solid black;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  border-top: 1px solid black;
 }
 
 .canvas_fullscreen.canvas-container {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 #canvas {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
-input[type="range"] + .thumb {
-    display: none !important;
+input[type='range'] + .thumb {
+  display: none !important;
 }
 
 #canvas.manual-enabled:hover {
-    border: 2px solid #2bbbad;
+  border: 2px solid #2bbbad;
 }
 
 .element-controls {
-    padding-left: 40px;
+  padding-left: 40px;
 }
 
 .rule-definition {
-    margin-right: 9px;
+  margin-right: 9px;
 }
 
 .rule-definition__item {
@@ -81,145 +81,145 @@ input[type="range"] + .thumb {
 .left-item,
 .middle-item,
 .right-item {
-    display: inline-block;
-    height: 20px;
-    width: 20px;
-    border: 1px solid black;
-    margin-left: 10px;
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  border: 1px solid black;
+  margin-left: 10px;
 }
 .middle-item {
-    border: 1px solid #2bbbad;
+  border: 1px solid #2bbbad;
 }
 
 .rule-set {
 }
 
 .rule-set:hover .rule-set__inner-container::after {
-    /* copy-paste from material */
-    font-family: "Material Icons";
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: "liga";
+  /* copy-paste from material */
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
 
-    content: "keyboard_arrow_left";
+  content: 'keyboard_arrow_left';
 }
 
 .rule-set__state-marker {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .rule-set__state-marker_born {
-    color: #2bbbad;
+  color: #2bbbad;
 }
 .rule-set__state-marker_die {
-    color: #d50000;
+  color: #d50000;
 }
 
 .left-item.filled,
 .middle-item.filled,
 .right-item.filled {
-    background-color: black;
+  background-color: black;
 }
 
 .test-line {
-    border: 1px solid red;
-    position: absolute;
-    width: 100%;
+  border: 1px solid red;
+  position: absolute;
+  width: 100%;
 }
 
 .page-footer {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 
 .container {
-    min-width: 1162px;
+  min-width: 1162px;
 }
 
 .rules-list li {
-    list-style-type: decimal;
+  list-style-type: decimal;
 }
 
 .rules-container {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .rule-set {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .rule-set__selected-marker {
-    /*display: none;*/
+  /*display: none;*/
 }
 
 .rule-set_enabled .rule-set__selected-marker {
-    /*display: inline;*/
+  /*display: inline;*/
 }
 
 .rule-set_enabled .rule-definition {
-    /*border: 1px solid #2bbbad;*/
+  /*border: 1px solid #2bbbad;*/
 }
 
 .rules-container__title {
-    font-weight: 600;
-    font-size: 1.2em;
+  font-weight: 600;
+  font-size: 1.2em;
 }
 
 .rules-container__hint-highlight {
-    color: #2bbbad;
-    font-weight: 600;
+  color: #2bbbad;
+  font-weight: 600;
 }
 
 html {
-    min-height: 772px;
+  min-height: 772px;
 }
 
 .color-select__sample {
-    margin-left: 10px;
-    height: 20px;
-    width: 20px;
-    border: 1px solid black;
-    display: inline-block;
+  margin-left: 10px;
+  height: 20px;
+  width: 20px;
+  border: 1px solid black;
+  display: inline-block;
 }
 
 .canvas__download-link {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .canvas_fullscreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100000;
 }
 
 .canvas_fullscreen #canvas {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .rule-code__rule-number {
-    height: 3rem;
-    line-height: 3rem;
-    margin-left: 20px;
-    font-size: 1.3em;
-    color: #228e80;
-    text-align: center;
+  height: 3rem;
+  line-height: 3rem;
+  margin-left: 20px;
+  font-size: 1.3em;
+  color: #228e80;
+  text-align: center;
 }
 
 .clearfix::after {
-    display: block;
-    content: "";
-    clear: both;
+  display: block;
+  content: '';
+  clear: both;
 }
