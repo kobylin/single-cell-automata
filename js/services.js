@@ -63,38 +63,38 @@
       }
     };
 
-    // todo: not working
-    this._checkFullscreen = function () {
-      var isFullscreen =
-        (document.fullscreenElement ||
-          document.webkitFullscreenElement ||
-          document.mozFullScreenElement ||
-          document.msFullscreenElement ||
-          null) !== null;
+    // // todo: not working
+    // this._checkFullscreen = function () {
+    //   var isFullscreen =
+    //     (document.fullscreenElement ||
+    //       document.webkitFullscreenElement ||
+    //       document.mozFullScreenElement ||
+    //       document.msFullscreenElement ||
+    //       null) !== null;
 
-      console.log('isFullscreen', isFullscreen);
+    //   console.log('isFullscreen', isFullscreen);
 
-      if (fullscreen !== isFullscreen) {
-        fullscreen = isFullscreen;
-        scope.$emit('fullscreen', fullscreen);
-      }
-    };
-    this._checkFullscreen();
-    document.addEventListener('fullscreenchange', function () {
-      self._checkFullscreen();
-      $rootScope.$apply();
-    });
-    document.addEventListener('webkitfullscreenchange', function () {
-      self._checkFullscreen();
-      $rootScope.$apply();
-    });
-    document.addEventListener('mozfullscreenchange', function () {
-      self._checkFullscreen();
-      $rootScope.$apply();
-    });
-    document.addEventListener('MSFullscreenChange', function () {
-      self._checkFullscreen();
-      $rootScope.$apply();
-    });
+    //   if (fullscreen !== isFullscreen) {
+    //     fullscreen = isFullscreen;
+    //     scope.$emit('fullscreen', fullscreen);
+    //   }
+    // };
+    // this._checkFullscreen();
+    // document.addEventListener('fullscreenchange', function () {
+    //   self._checkFullscreen();
+    //   $rootScope.$apply();
+    // });
+    // document.addEventListener('webkitfullscreenchange', function () {
+    //   self._checkFullscreen();
+    //   $rootScope.$apply();
+    // });
+    // document.addEventListener('mozfullscreenchange', function () {
+    //   self._checkFullscreen();
+    //   $rootScope.$apply();
+    // });
+    // document.addEventListener('MSFullscreenChange', function () {
+    //   self._checkFullscreen();
+    //   $rootScope.$apply();
+    // });
   });
 })();
